@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <title>Character Count</title>
+  </head>
+  <body>
+    <div class="container" x-data="initAlpine">
+      <div class="inner-container">
+        <h1 class="heading">Character Count</h1>
+        <div
+          class="message"
+          :class="{'error': showError, 'success': showSuccess}"
+        >
+          <p x-text="errorMessage" x-show="showError"></p>
+          <p x-text="successMessage" x-show="showSuccess"></p>
+        </div>
+        <textarea
+          @input="count"
+          x-model="text"
+          class="textarea"
+          name=""
+          cols="30"
+          rows="10"
+        ></textarea>
+        <p class="helper-text">
+          you have entered: character count:
+          <span x-text="characterCount"></span>
+          word count
+          <span x-text="wordCount"></span>
+        </p>
+        <button class="btn" @click="submitText">Submit</button>
+      </div>
+    </div>
+
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>
