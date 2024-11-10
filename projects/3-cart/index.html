@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <title>Cart</title>
+  </head>
+  <body>
+    <div class="container" x-data="initAlpine" x-init="init">
+      <div class="inner-container">
+        <h1 class="heading">Cart</h1>
+        <ul class="cart-products">
+          <template x-for="cartProduct in cartProducts" :key="cartProduct.id">
+            <li class="cart-product">
+              <div class="cart-product-details">
+                <img
+                  :src="cartProduct.thumbnail"
+                  alt="thumbnail"
+                  width="150"
+                  height="150"
+                />
+                <p x-text="cartProduct.title"></p>
+
+                <div class="actions">
+                  <input
+                    @input="updateCartItemCount(cartProduct.id, $event.target.value ) "
+                    type="number"
+                    min="1"
+                    max="10"
+                    class="count-input"
+                    :value="getCartItemCount(cartProduct.id)"
+                  />
+                  <button @click="removeFromCart(cartProduct.id)">X</button>
+                </div>
+              </div>
+              <div class="cart-product-price">
+                <p
+                  x-text="formattedComputedPrice(cartProduct.id, cartProduct.price)"
+                ></p>
+              </div>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </div>
+
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,104 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f2f2f2;
+}
+
+.container {
+  background: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  max-width: 700px;
+  margin: 10rem auto 1rem;
+}
+
+.inner-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+}
+
+.heading {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.cart-products {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.cart-product {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f2f2f2;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.cart-product-price {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.cart-product-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+}
+.cart-product-details p {
+  font-size: 1.5rem;
+}
+
+.count-input {
+  width: 100px;
+}
+
+.btn {
+  border: none;
+  width: 100%;
+  background: #179b20;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 10px;
+  transition: all 500ms ease-in;
+  cursor: pointer;
+  color: white;
+}
+.btn:hover {
+  opacity: 0.8;
+}
+.btn.danger {
+  background: tomato;
+}
+.btn:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
+
+.helper-text {
+  color: #333;
+}
+
+.error {
+  color: tomato;
+}
+.success {
+  color: green;
+}
