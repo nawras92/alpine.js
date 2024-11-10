@@ -3,7 +3,13 @@ function initAlpine() {
   const cartItemsKey = 'lwnUserCartItems';
 
   return {
-    cartItems: JSON.parse(localStorage.getItem(cartItemsKey) || '') || [],
+    cartItems:
+      JSON.parse(
+        localStorage.getItem(cartItemsKey) === null
+          ? '[]'
+          : localStorage.getItem(cartItemsKey)
+      ) || [],
+
     // Save to localStorage
     saveToLocalStorage() {
       localStorage.setItem(cartItemsKey, JSON.stringify(this.cartItems));
