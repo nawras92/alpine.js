@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <title>Fetch Data Users</title>
+  </head>
+  <body>
+    <div class="container" x-data="initAlpine" x-init="init">
+      <div class="inner-container">
+        <h1 class="heading">Fetch Data Users</h1>
+        <template x-if="users.length === 0">
+          <p>No Users Found</p>
+        </template>
+
+        <ul class="users-list">
+          <template x-for="user in users" :key="user.id">
+            <li class="user">
+              <p x-text="user.name"></p>
+              <p x-text="user.username"></p>
+              <p x-text="user.email"></p>
+              <p>
+                <span x-text="user.address.street"></span>-
+                <span x-text="user.address.city"></span>
+              </p>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </div>
+
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>
