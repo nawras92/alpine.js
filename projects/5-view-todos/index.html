@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <title>View Todos</title>
+  </head>
+  <body>
+    <div class="container" x-data="initAlpine" x-init="init">
+      <div class="inner-container">
+        <h1 class="heading">View Todos</h1>
+        <div class="todo-actions">
+          <div id="pagination"></div>
+          <div id="search-box" x-show="!paginate"></div>
+        </div>
+        <ul class="todos-list">
+          <div class="spinner" x-show="todos.length === 0"></div>
+          <template x-for="todo in displayedTodos" :key="todo.id">
+            <li class="todo" :class="{'completed':todo.completed}">
+              <p class="todo-title">
+                #<span x-text="todo.id"></span>
+                <span x-text="todo.title"></span>
+              </p>
+              <p class="todo-user" x-text="getTodoUser(todo.userId)"></p>
+            </li>
+          </template>
+        </ul>
+      </div>
+
+      <!-- Search Box -->
+      <template x-teleport="#search-box">
+        <div class="search-box-container">
+          <input
+            placeholder="Search Todos"
+            type="text"
+            x-model="searchWord"
+            @input="searchTodos()"
+          />
+          <p
+            x-text="searchResultString"
+            x-show="searchResultString.length != 0"
+          ></p>
+        </div>
+      </template>
+
+      <!-- pagination -->
+      <template x-teleport="#pagination">
+        <div class="pagination-container">
+          <button
+            class="btn"
+            :class="{'enabled': paginate}"
+            @click="paginate =!paginate; paginateTodos();"
+          >
+            Paginate Todos
+          </button>
+          <div class="pages" x-show="paginate">
+            <template x-for="i in getPagesArray()" :key="i">
+              <button
+                x-text="i"
+                class="btn paginate"
+                :class="{'current-page': currentPage == i}"
+                @click="setCurrentPage(i)"
+              ></button>
+            </template>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>
