@@ -17,6 +17,8 @@
         <div class="todo-actions">
           <div id="pagination"></div>
           <div id="search-box" x-show="!paginate"></div>
+          <div id="filter-box" x-show="!paginate"></div>
+          <div id="filter-by-user" x-show="!paginate"></div>
         </div>
         <ul class="todos-list">
           <div class="spinner" x-show="todos.length === 0"></div>
@@ -31,6 +33,49 @@
           </template>
         </ul>
       </div>
+
+      <!-- Filter By User -->
+      <template x-teleport="#filter-by-user">
+        <div class="filter-by-user-container">
+          <select x-model="selectedTodoUserId" @change="filterByUser">
+            <option value="">Pick User</option>
+            <template x-for="user in users" :key="user.id">
+              <option :value="user.id" x-text="user.name"></option>
+            </template>
+          </select>
+          <div id="user-card">
+            <template x-if="selectedTodoUser != ''">
+              <div class="user-card">
+                <p x-text="selectedTodoUser.name"></p>
+                <p x-text="selectedTodoUser.username"></p>
+                <p x-text="selectedTodoUser.email"></p>
+              </div>
+            </template>
+          </div>
+        </div>
+      </template>
+
+      <!-- Filter Box -->
+      <template x-teleport="#filter-box">
+        <div class="filters-container">
+          <label>
+            <input
+              type="checkbox"
+              x-model="showCompleted"
+              @change="filterByCompleted"
+            />
+            Show Completed
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              x-model="showIncompleted"
+              @change="filterByIncompleted"
+            />
+            Show Incompleted
+          </label>
+        </div>
+      </template>
 
       <!-- Search Box -->
       <template x-teleport="#search-box">

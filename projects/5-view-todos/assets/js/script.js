@@ -1,6 +1,9 @@
 function initAlpine() {
   const usersApi = 'https://jsonplaceholder.typicode.com/users';
   const todosApi = 'https://jsonplaceholder.typicode.com/todos';
+  // filter by completed
+  // filter by incompleted
+  // filter by user
 
   return {
     users: [],
@@ -14,6 +17,12 @@ function initAlpine() {
     //*** Search
     searchWord: '',
     searchResultString: '',
+    //*** Filter
+    showCompleted: false,
+    showIncompleted: false,
+    //** Filter by user
+    selectedTodoUserId: '',
+    selectedTodoUser: '',
 
     //*** Init Function
     async init() {
@@ -35,15 +44,9 @@ function initAlpine() {
     },
 
     //*** Search and filter
-    searchTodos() {
-      let filteredTodos = this.todos;
-      if (this.searchWord) {
-        filteredTodos = this.displayedTodos.filter((todo) =>
-          todo.title.includes(this.searchWord.toLowerCase())
-        );
-      }
-      if (filteredTodos.length !== 0) {
-        this.displayedTodos = filteredTodos;
+    // update Search Result String
+    updateSearchResultString() {
+      if (this.displayedTodos.length !== 0) {
         this.searchResultString = 'The result for: ' + this.searchWord;
       } else {
         this.searchResultString = 'No Result Found';
@@ -52,6 +55,68 @@ function initAlpine() {
       if (!this.searchWord) {
         this.searchResultString = '';
       }
+    },
+    searchTodos() {
+      let filteredTodos = this.todos;
+      if (this.searchWord) {
+        filteredTodos = filteredTodos.filter((todo) =>
+          todo.title.toLowerCase().includes(this.searchWord.toLowerCase())
+        );
+      }
+      if (this.showCompleted) {
+        this.showIncompleted = false;
+        filteredTodos = filteredTodos.filter((todo) => todo.completed);
+      }
+      if (this.showIncompleted) {
+        this.showCompleted = false;
+        filteredTodos = filteredTodos.filter((todo) => !todo.completed);
+      }
+      this.displayedTodos = filteredTodos;
+      this.updateSearchResultString();
+    },
+
+    //**** Filters
+    filterByCompleted() {
+      let filteredTodos = this.todos;
+      if (this.searchWord) {
+        filteredTodos = filteredTodos.filter((todo) =>
+          todo.title.toLowerCase().includes(this.searchWord.toLowerCase())
+        );
+      }
+      if (this.showCompleted) {
+        this.showIncompleted = false;
+        filteredTodos = filteredTodos.filter((todo) => todo.completed);
+      }
+      this.displayedTodos = filteredTodos;
+    },
+    filterByIncompleted() {
+      let filteredTodos = this.todos;
+      if (this.searchWord) {
+        filteredTodos = filteredTodos.filter((todo) =>
+          todo.title.toLowerCase().includes(this.searchWord.toLowerCase())
+        );
+      }
+      if (this.showIncompleted) {
+        this.showCompleted = false;
+        filteredTodos = filteredTodos.filter((todo) => !todo.completed);
+      }
+      this.displayedTodos = filteredTodos;
+    },
+
+    // filter by user
+    filterByUser() {
+      let filteredTodos = this.todos;
+
+      if (this.selectedTodoUserId) {
+        filteredTodos = filteredTodos.filter(
+          (todo) => todo.userId == this.selectedTodoUserId
+        );
+        // Get the user
+        const user = this.users.find((u) => u.id == this.selectedTodoUserId);
+        this.selectedTodoUser = user ? user : '';
+      }
+
+      this.displayedTodos = filteredTodos;
     },
 
     //*** Getters
