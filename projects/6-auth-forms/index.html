@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <title>Auth Forms</title>
+  </head>
+  <body>
+    <div class="container" x-data="initAlpine" x-init="init">
+      <div class="inner-container">
+        <h1 class="heading">Dashboard</h1>
+        <!-- Auth Forms -->
+        <div class="auth-forms" x-show="!loggedIn">
+          <div id="login-form"></div>
+          <div id="register-form"></div>
+          <!-- Toggle Buttons -->
+          <button
+            x-cloak
+            @click="showRegisterForm=false; showLoginForm= true;"
+            class="btn link"
+            x-show="!showLoginForm"
+          >
+            Have an account? Login
+          </button>
+          <button
+            x-cloak
+            @click="showRegisterForm=true; showLoginForm= false;"
+            class="btn link"
+            x-show="!showRegisterForm"
+          >
+            Create an account
+          </button>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" x-show="loggedIn"></div>
+      </div>
+
+      <!-- Dashboard Template -->
+      <template x-teleport="#dashboard">
+        <div class="dashboard-container">
+          <h1>
+            Welcome to dashboard,
+            <span x-text="loggedInUser.name"></span>
+          </h1>
+          <button class="btn link" @click="logoutUser">Logout</button>
+        </div>
+      </template>
+
+      <!-- Login Form -->
+      <template x-teleport="#login-form">
+        <div class="login-form-container" x-show="showLoginForm">
+          <h2>Login</h2>
+          <p
+            x-text="loginMessage"
+            x-show="loginMessage"
+            :class="{'error': loginError, 'success': !loginError}"
+          ></p>
+          <input
+            x-model="loginUsername"
+            class="input"
+            type="text"
+            placeholder="enter username"
+          />
+          <input
+            x-model="loginPassword"
+            class="input"
+            type="password"
+            placeholder="password"
+          />
+          <button class="btn full-width" @click="loginToWebsite">Login</button>
+        </div>
+      </template>
+
+      <!-- Register Form -->
+      <template x-teleport="#register-form">
+        <div class="register-form-container" x-show="showRegisterForm">
+          <h2>Register</h2>
+          <p
+            x-text="registerMessage"
+            x-show="registerMessage"
+            :class="{'error': registerError, 'success': !registerError}"
+          ></p>
+          <input
+            x-model="registerName"
+            type="text"
+            class="input"
+            placeholder="full name"
+          />
+          <input
+            x-model="registerUsername"
+            type="text"
+            class="input"
+            placeholder="username"
+          />
+
+          <input
+            x-model="registerPassword1"
+            type="password"
+            class="input"
+            placeholder="Password "
+          />
+          <input
+            x-model="registerPassword2"
+            type="password"
+            class="input"
+            placeholder="Confirm Password "
+          />
+          <button class="btn full-width" @click="createNewAccount">
+            Sign up
+          </button>
+        </div>
+      </template>
+    </div>
+
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>
